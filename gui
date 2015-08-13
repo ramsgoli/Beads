@@ -1,0 +1,84 @@
+from Tkinter import *
+from numpy import *
+
+
+
+def getTheta1():
+    theta1 = []
+    for line in open("theta1.txt"):
+        str_row = line.split()
+        f_row = [float(val) for val in str_row]
+        theta1.append(f_row)
+    return matrix(theta1)
+
+def getTheta2():
+    theta2 = []
+    for line in open("theta2.txt"):
+        str_row = line.split()
+        f_row = [float(val) for val in str_row]
+        theta2.append(f_row)
+    return matrix(theta2)
+
+
+
+def sigmoid(z):
+    g = 1.0 / (1.0 + exp(-z))
+    return g
+
+
+def calcProb():
+    intD = float(strD.get())
+    intT = float(strT.get())
+    intA = float(strA.get())
+
+    theta1 = getTheta1()
+    theta2 = getTheta2()
+
+
+    x = matrix([intD, intT, intA])
+    x = insert(x, 0, 1)
+
+    h1 = sigmoid(x * theta1.transpose())
+    h1 = insert(h1, 0, 1)
+    h2 = sigmoid(h1 * theta2.transpose())
+
+    label_pred1 = Label(root, text = "Chance of being money bead: %%%.2f" %(h2[0,0] * 100))
+    label_pred2 = Label(root, text = "Chance of being basket bead: %%%.2f" %(h2[0,1] * 100))
+    label_pred1.grid(row = 4, columnspan = 3, sticky = W)
+    label_pred2.grid(row = 5, columnspan = 3, sticky = W)
+
+
+    return
+
+
+
+root = Tk()
+root.geometry("300x200")
+strD = StringVar()
+strT = StringVar()
+strA = StringVar()
+
+label_d = Label(root, text = "Enter Diameter")
+label_t = Label(root, text="Enter Thickness")
+label_a = Label(root, text="Enter Aperture")
+
+dEntry = Entry(root, textvariable = strD)
+tEntry = Entry(root, textvariable = strT)
+aEntry = Entry(root, textvariable = strA)
+
+
+label_d.grid(row = 0, column = 0, sticky = E)
+label_t.grid(row = 1, column = 0, sticky = E)
+label_a.grid(row = 2, column = 0, sticky = E)
+
+dEntry.grid(row = 0, column = 1)
+tEntry.grid(row = 1, column = 1)
+aEntry.grid(row = 2, column = 1)
+
+enter_button = Button(root, text='Calculate', command=calcProb)
+enter_button.grid(row = 3, column = 1)
+
+
+
+
+root.mainloop()
