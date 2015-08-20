@@ -1,11 +1,13 @@
 __author__ = 'sudish'
 from Tkinter import *
 from numpy import *
-from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
-import random
+from mpl_toolkits.mplot3d import Axes3D
 
 class gui(Tk):
+
+    fig = plt.figure(figsize=(11,11))
+    ax = fig.add_subplot(111, projection="3d")
 
     def __init__(self):
         self.root = Tk()
@@ -37,6 +39,11 @@ class gui(Tk):
 
         self.root.mainloop()
 
+    def dofuncs(self):
+        self.graph()
+        self.calcProb()
+
+
     def calcProb(self):
         intD = float(self.strD.get())
         intT = float(self.strT.get())
@@ -58,10 +65,40 @@ class gui(Tk):
         label_pred1.grid(row = 4, columnspan = 3, sticky = W)
         label_pred2.grid(row = 5, columnspan = 3, sticky = W)
 
+    """
+    def graph(self):
+        Xmoney = []
+        Ymoney = []
+        Zmoney = []
+        Xbasket = []
+        Ybasket = []
+        Zbasket = []
 
-        X = []
-        Y = []
-        Z = []
+        with open("data.txt") as file:
+            data = file.read()
+            strList = data.split()
+            for i in xrange(0, 1281, 3):
+                Xmoney.append(float(strList[i]))
+                Ymoney.append(float(strList[i+1]))
+                Zmoney.append(float(strList[i+2]))
+
+            for i in xrange(1281, len(strList), 3):
+                Xbasket.append(float(strList[i]))
+                Ybasket.append(float(strList[i+1]))
+                Zbasket.append(float(strList[i+2]))
+
+
+
+        self.ax.scatter(Xmoney, Ymoney, Zmoney, c = 'r')
+        self.ax.scatter(Xbasket, Ybasket, Zbasket, c = 'b')
+        self.ax.set_xlabel("Diameter")
+        self.ax.set_ylabel("Thickness")
+        self.ax.set_zlabel("Aperture")
+        self.fig.show()
+
+    """
+    def addPoint(self, D, T, A):
+        self.ax.scatter(D, T, A, c = 'g')
 
     def getTheta1(self):
         theta1 = []

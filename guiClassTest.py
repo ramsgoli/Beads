@@ -8,6 +8,10 @@ import random
 
 class gui(Tk):
 
+    userX = []
+    userY = []
+    userZ = []
+
     def __init__(self):
         self.root = Tk()
 
@@ -66,6 +70,12 @@ class gui(Tk):
         Ybasket = []
         Zbasket = []
 
+
+
+        self.userX.append(intD)
+        self.userY.append(intT)
+        self.userZ.append(intA)
+
         with open("data.txt") as file:
             data = file.read()
             strList = data.split()
@@ -82,47 +92,16 @@ class gui(Tk):
         fig = plt.figure(figsize=(11,11))
         ax = fig.add_subplot(111, projection="3d")
 
-        ax.scatter(Xmoney, Ymoney, Zmoney, c = 'r')
-        ax.scatter(Xbasket, Ybasket, Zbasket, c = 'b')
+        ax.scatter(Xmoney, Ymoney, Zmoney, c = 'r', label = 'Money Beads')
+        ax.scatter(Xbasket, Ybasket, Zbasket, c = 'b', label = 'Basket Beads')
+        fig.show()
+        ax.scatter(self.userX, self.userY, self.userZ, c = 'y', label = 'User Bead')
+        plt.show()
+
+
         ax.set_xlabel("Diameter")
         ax.set_ylabel("Thickness")
         ax.set_zlabel("Aperture")
-        fig.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
